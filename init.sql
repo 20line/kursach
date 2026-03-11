@@ -180,7 +180,7 @@ INSERT INTO inventory_items (name, price_flat, is_active) VALUES
 
 -- Admin user
 INSERT INTO users (username, email, password_hash, role)
-VALUES ('admin', 'admin@example.com', 'hashed_pass_here', 'admin');
+VALUES ('admin', 'admin@example.com', '$2b$12$lVMzW7TGb/M.cNKjsLe7wOt.3yeY2UR8.HZDFMNGntxfWT8EGvs.K', 'admin');
 
 SET @admin_id = LAST_INSERT_ID();
 INSERT INTO staff (staff_id, last_name, address, date_of_birth, position, hire_date,
@@ -190,7 +190,7 @@ VALUES (@admin_id, 'Admin', 'N/A', NULL, 'administrator', CURRENT_DATE,
 
 -- Example producer
 INSERT INTO users (username, email, password_hash, role)
-VALUES ('producer1', 'producer1@example.com', 'hashed_pass_here', 'staff');
+VALUES ('producer1', 'producer1@example.com', '$2b$12$lVMzW7TGb/M.cNKjsLe7wOt.3yeY2UR8.HZDFMNGntxfWT8EGvs.K', 'staff');
 
 SET @producer_user_id = LAST_INSERT_ID();
 INSERT INTO staff (staff_id, last_name, address, date_of_birth, position, hire_date,
@@ -200,7 +200,7 @@ VALUES (@producer_user_id, 'Producer', 'Studio Address', NULL, 'producer', CURRE
 
 -- Example client
 INSERT INTO users (username, email, password_hash, role)
-VALUES ('client1', 'client1@example.com', 'hashed_pass_here', 'client');
+VALUES ('client1', 'client1@example.com', '$2b$12$lVMzW7TGb/M.cNKjsLe7wOt.3yeY2UR8.HZDFMNGntxfWT8EGvs.K', 'client');
 
 SET @client_user_id = LAST_INSERT_ID();
 INSERT INTO clients (client_id, title, last_name, phone, address, MKAD)
