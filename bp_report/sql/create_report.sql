@@ -1,0 +1,1 @@
+CALL create_service_report(%s, %s);

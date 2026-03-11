@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Самая популярная услуга</title>
+</head>
+<body>
+    <center>
+        <h2>Введите месяц и год</h2>
+        {% if message %}
+            <p style="color:red">{{ message }}</p>
+        {% endif %}
+        <form method="POST">
+            <div>
+                <label>Месяц (1-12):</label>
+                <input type="number" name="month" min="1" max="12" required>
+            </div>
+            <div>
+                <label>Год:</label>
+                <input type="number" name="year" min="2000" required>
+            </div>
+            <br>
+            <input type="submit" value="Показать">
+        </form>
+        <br>
+        <a href="{{ url_for('bp_report.report_menu_handle') }}">Назад в меню отчётов</a>
+    </center>
+</body>
+</html>

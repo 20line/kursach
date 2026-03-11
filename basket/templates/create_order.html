@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление заказа</title>
+</head>
+<body>
+{% if basket %}
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+{% else %}
+    <p>Корзина пуста</p>
+{% endif %}
+    <a href="{{ url_for('bp_order.show_products') }}">Вернуться к списку продуктов</a>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css"> <!-- Jinja подставляет адрес css файла -->
+</head>
+<body>
+    <center>
+        <h2>{{prod_title}}</h2>
+        <p>
+            <table border="1">
+                <tr class="tab_title">
+                    {% for column in columns %}
+                        <td>{{ column }}</td>
+                    {% endfor %}
+                </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{product[0]}}</td>
+                <td>{{product[1]}}</td>
+                <td>{{product[2]}}</td>
+            </tr>
+        {% endfor %}
+            </table>
+        </p>
+        <a href="/">Вернуться в главное меню</a>
+    </center>
+</body>
+</html>
+<!-- Добавить возвращение в меню -->

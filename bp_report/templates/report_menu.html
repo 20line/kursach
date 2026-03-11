@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Работа с отчётами</title>
+</head>
+<body>
+<center>
+  <h2>Меню работы с отчётами</h2>
+  <ul style="list-style-type:none">
+    <li><a href="create">Создать отчёт</a></li>
+    <li><a href="show">Просмотреть существующие отчёты</a></li>
+    <li><a href="{{ url_for('bp_report.top_services_form') }}">Топ популярных услуг</a></li>
+    <li><a href="/">Вернуться в главное меню</a></li>
+    <li><a href="{{ url_for('bp_report.top_service_form') }}">Самая популярная услуга</a></li>
+  </ul>
+</center>
+</body>
+</html>

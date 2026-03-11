@@ -1,0 +1,1 @@
+SELECT service_name, price FROM service WHERE service_id = %s;

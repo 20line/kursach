@@ -1,0 +1,1 @@
+INSERT INTO booking_detail (booking_id, service_id, quantity) VALUES (%s, %s, %s);

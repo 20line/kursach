@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание отчёта</title>
+</head>
+<body>
+<center>
+    <h2>Ввод даты отчёта</h2>
+    <p>
+        <form action="" method="POST">
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+            <div class="form-input">
+                <label for="month">Месяц отчёта</label>
+                <input type="text" name="month" id="month">
+            </div>
+
+            <div class="form-input">
+                <label for="year">Год отчёта</label>
+                <input type="text" name="year" id="year">
+            </div>
+            <br><br>
+
+            <input type="submit" value="Отправить">
+        </form>
+    </p>
+    <a href="/">Вернуться на главную страницу</a>
+</center>
+</body>
+</html>
