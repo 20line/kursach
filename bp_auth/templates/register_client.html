@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация клиента{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 480px; margin: 0 auto;">
+    <div class="card-header">
+        <h1 class="card-title">Регистрация клиента</h1>
+        <p class="card-description">
+            Создайте учетную запись для оформления заказов.
+        </p>
+    </div>
+
+    <form
+        class="form mt-4"
+        method="POST"
+        action="{{ url_for('blueprint_auth.register_client') }}"
+    >
+        <div class="form-field">
+            <label class="label" for="username">Имя пользователя</label>
+            <input
+                id="username"
+                type="text"
+                name="username"
+                class="input"
+                required
+            />
+        </div>
+        <div class="form-field">
+            <label class="label" for="email">Email</label>
+            <input
+                id="email"
+                type="text"
+                name="email"
+                class="input"
+                required
+            />
+        </div>
+        <div class="form-field">
+            <label class="label" for="password">Пароль</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                class="input"
+                required
+            />
+        </div>
+        <input type="hidden" name="role" value="client" />
+
+        <button class="btn btn-block" type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

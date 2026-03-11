@@ -1,0 +1,12 @@
+[project]
+name = "pythonproject1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.2",
+    "flask-bcrypt>=1.0.1",
+    "pymysql>=1.1.2",
+    "python-dateutil>=2.8.0",
+]

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Главное меню{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Главное меню</h1>
+        <p class="card-description">
+            Управление заказами, запросами и отчетами.
+        </p>
+    </div>
+
+    <div class="menu-vertical">
+        <button
+            class="btn btn-block"
+            onclick="window.location.href='{{ url_for('blueprint_query.query_menu_handler') }}'"
+        >
+            Работа с запросами
+        </button>
+
+        {% if session.role == 'admin' or session.role == 'staff' %}
+        <button
+            class="btn btn-block"
+            onclick="window.location.href='{{ url_for('blueprint_report.report_menu_handler') }}'"
+        >
+            Работа с отчетами
+        </button>
+        {% endif %}
+
+        {% if session.role == 'client' %}
+        <button class="btn btn-block" onclick="location.href = '/order'">
+            Создать бронирование
+        </button>
+        {% endif %}
+
+        {% if session.role == 'admin' %}
+        <button
+            class="btn btn-block"
+            onclick="window.location.href='{{ url_for('blueprint_auth.register_staff') }}'"
+        >
+            Зарегистрировать сотрудника
+        </button>
+        {% endif %}
+
+        <button
+            class="btn btn-danger btn-block"
+            onclick="window.location.href='{{ url_for('blueprint_auth.logout') }}'"
+        >
+            Выход из системы
+        </button>
+    </div>
+</div>
+{% endblock %}

@@ -1,23 +1,59 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Аутентификация</title>
-</head>
-<body>
-  <center>
-    <h2>Вход в систему</h2>
-    <form action="" method="POST">
-      <div class="form_item">
-        <label for="login">Логин</label>
-        <input type="text" name="login" id="login">
-      </div>
-      <div class="form_item">
-        <label for="password">Пароль</label>
-        <input type="password" name="password" id="password">
-      </div>
-      <button type="submit">Войти</button>
+{% extends "base.html" %}
+
+{% block title %}Авторизация{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 420px; margin: 0 auto;">
+    <div class="card-header">
+        <h1 class="card-title">Вход в систему</h1>
+        <p class="card-description">Введите логин и пароль.</p>
+    </div>
+
+    <form
+        class="form"
+        method="POST"
+        action="{{ url_for('blueprint_auth.login') }}"
+    >
+        <div class="form-field">
+            <label class="label" for="username">Имя пользователя</label>
+            <input
+                id="username"
+                type="text"
+                name="username"
+                class="input"
+                required
+            />
+        </div>
+        <div class="form-field">
+            <label class="label" for="password">Пароль</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                class="input"
+                required
+            />
+        </div>
+        <button class="btn btn-block" type="submit">Войти</button>
     </form>
-  </center>
-</body>
-</html>
+
+    <div
+        class="mt-4"
+        style="
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #9ca3af;
+        "
+    >
+        <span><a href="#" style="color: #e5e5e5;">Забыли пароль?</a></span>
+        <span
+            ><a
+                href="{{ url_for('blueprint_auth.register_client') }}"
+                style="color: #e5e5e5;"
+                >Регистрация</a
+            ></span
+        >
+    </div>
+</div>
+{% endblock %}

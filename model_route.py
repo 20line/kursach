@@ -1,27 +1,19 @@
-from dataclasses import dataclass
-from database.select import select_dict
-from database.select2 import select_dict2
+# model_route.py
+from database.query import execute_sql
 
-
-@dataclass
 class ResultInfo:
-    result: tuple
-    status: bool
-    err_message: str
+    def __init__(self, status: bool, result):
+        self.status = status
+        self.result = result  # ← может быть list или int!
 
 
-def model_route(provider, user_input: dict, filename='product.sql'):
-    err_message = ''
-    _sql = provider.get(filename)
+def model_route(provider, params, sql_file) -> ResultInfo:
+    _sql = provider.get(sql_file)
+    result = execute_sql(_sql, params)
+    
+    print(sql_file)
 
-    if filename == 'service_list.sql':
-        result = select_dict2(_sql, user_input)
-    else:
-        result = select_dict(_sql, user_input)
-
-    if result:
-        return ResultInfo(result=result, status=True, err_message=err_message)
-    else:
-        err_message = 'Данные не получены'
-        return ResultInfo(result=result, status=False, err_message=err_message)
-
+    if result is None:
+        return ResultInfo(False, None)
+    
+    return ResultInfo(True, result)

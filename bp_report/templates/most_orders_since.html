@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Клиент с наибольшим количеством бронирований за период{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">
+            Клиент с наибольшим количеством бронирований за период
+        </h1>
+        <p class="card-description">
+            Выберите дату начала и посмотрите лидера и его заказы.
+        </p>
+    </div>
+
+    <form
+        method="POST"
+        class="form form-row mt-4"
+        action="{{ url_for('blueprint_report.most_orders_since') }}"
+    >
+        <div class="form-field">
+            <label class="label" for="since">С даты</label>
+            <input
+                type="date"
+                id="since"
+                name="since"
+                value="{{ since }}"
+                class="input"
+                required
+            />
+        </div>
+        <button type="submit" class="btn">Показать</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-error mt-4">{{ error }}</div>
+    {% endif %}
+
+    {% if user %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2 class="card-title">Лидер: {{ user.username }}</h2>
+            <p class="card-description">
+                Бронирований: <strong>{{ user.booking_count }}</strong>,
+                выручка: {{ user.total_revenue|default(0)|round(2) }} ₽
+            </p>
+        </div>
+    </div>
+
+    {% if data %}
+    <h3 class="mt-4">Бронирования клиента</h3>
+    <table class="mt-2">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Начало</th>
+                <th>Окончание</th>
+                <th>Стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in data %}
+            <tr>
+                <td>{{ order.booking_id }}</td>
+                <td>{{ order.start_at }}</td>
+                <td>{{ order.end_at }}</td>
+                <td>{{ order.total_price|round(2) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="mt-4 text-muted">
+        У этого клиента нет бронирований (или они вне периода).
+    </p>
+    {% endif %} {% else %}
+    <p class="mt-4 text-muted">Нет данных за выбранный период.</p>
+    {% endif %}
+</div>
+{% endblock %}

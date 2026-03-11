@@ -1,15 +1,5 @@
 {
-  "manager": [
-    "bp_auth",
-    "bp_query"
-  ],
-  "admin": [
-    "bp_auth",
-    "bp_query",
-    "bp_report"
-  ],
-  "director": [
-    "bp_auth",
-    "bp_report"
-  ]
+    "client": ["bp_auth", "bp_query"],
+    "admin": ["blueprint_auth", "bp_query", "bp_report"],
+    "staff": ["bp_auth", "bp_report"]
 }

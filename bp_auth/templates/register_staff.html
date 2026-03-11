@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация сотрудника{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 520px; margin: 0 auto;">
+    <div class="card-header">
+        <h1 class="card-title">Регистрация сотрудника</h1>
+        <p class="card-description">
+            Создайте учетную запись для водителя или менеджера.
+        </p>
+    </div>
+
+    <form
+        class="form mt-4"
+        method="POST"
+        action="{{ url_for('blueprint_auth.register_staff') }}"
+    >
+        <div class="form-field">
+            <label class="label" for="username">Имя пользователя</label>
+            <input
+                id="username"
+                type="text"
+                name="username"
+                class="input"
+                required
+            />
+        </div>
+
+        <div class="form-field">
+            <label class="label" for="lastname">Фамилия</label>
+            <input
+                id="lastname"
+                type="text"
+                name="lastname"
+                class="input"
+                required
+            />
+        </div>
+
+        <div class="form-field">
+            <label class="label" for="email">Email</label>
+            <input
+                id="email"
+                type="text"
+                name="email"
+                class="input"
+                required
+            />
+        </div>
+
+        <div class="form-field">
+            <label class="label" for="password">Пароль</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                class="input"
+                required
+            />
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label class="label" for="position">Должность</label>
+                <select
+                    id="position"
+                    name="position"
+                    class="input"
+                    style="background-color: #020617;"
+                >
+                    <option value="driver">driver</option>
+                    <option value="manager">manager</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label class="label" for="role">Роль</label>
+                <select
+                    id="role"
+                    name="role"
+                    class="input"
+                    style="background-color: #020617;"
+                >
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-block" type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

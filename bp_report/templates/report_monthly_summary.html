@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Сводка бронирований за месяц{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Сводка бронирований за месяц</h1>
+        <p class="card-description">
+            Агрегированные данные по количеству бронирований и выручке.
+        </p>
+    </div>
+
+    <form method="POST" class="form form-row">
+        <div class="form-field">
+            <label class="label">Месяц (1-12)</label>
+            <input
+                type="number"
+                name="month"
+                min="1"
+                max="12"
+                value="{{ month or '' }}"
+                class="input"
+                required
+            />
+        </div>
+        <div class="form-field">
+            <label class="label">Год</label>
+            <input
+                type="number"
+                name="year"
+                min="2000"
+                max="2100"
+                value="{{ year or '' }}"
+                class="input"
+                required
+            />
+        </div>
+        <button class="btn" type="submit">Сформировать отчет</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-error mt-4">{{ error }}</div>
+    {% endif %}
+
+    {% if rows %}
+    <table class="mt-4">
+        <thead>
+            <tr>
+                <th>Месяц</th>
+                <th>Год</th>
+                <th>Кол-во бронирований</th>
+                <th>Выручка, руб</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in rows %}
+            <tr>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>{{ "%.2f"|format(r[3] or 0) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif month and year and not error %}
+    <p class="mt-4 text-muted">Отчет за указанный период не найден.</p>
+    {% endif %}
+
+    <button
+        class="btn btn-outline mt-6"
+        onclick="window.location.href = '/report/menu'"
+    >
+        Назад в меню отчетов
+    </button>
+</div>
+{% endblock %}

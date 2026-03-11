@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Создать бронирование{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Создать бронирование</h1>
+        <p class="card-description">
+            Выберите время, инвентарь и (опционально) музыкального продюсера.
+        </p>
+    </div>
+
+    <div class="mt-4">
+        <a
+            href="/"
+            class="text-muted"
+            style="text-decoration: underline; font-size: 13px;"
+            >Вернуться в меню пользователя</a
+        >
+    </div>
+
+    <form class="form mt-6" method="POST" action="{{ url_for('blueprint_order.create_booking') }}">
+        <div class="form-field">
+            <label class="label" for="start_at">Начало</label>
+            <input id="start_at" type="datetime-local" name="start_at" class="input" required />
+        </div>
+
+        <div class="form-field">
+            <label class="label" for="end_at">Окончание</label>
+            <input id="end_at" type="datetime-local" name="end_at" class="input" required />
+        </div>
+
+        <div class="mt-6">
+            <h2 class="card-title">Инвентарь (дополнительно)</h2>
+            <p class="text-muted" style="font-size: 13px;">Можно выбрать несколько позиций.</p>
+
+            {% if inventory_items %}
+            <div class="mt-2">
+                {% for item in inventory_items %}
+                <label style="display:flex; gap:10px; align-items:center; margin-top:8px;">
+                    <input
+                        type="checkbox"
+                        name="inventory_item"
+                        value="{{ item.item_id }}"
+                        data-price="{{ item.price_flat }}"
+                        class="checkbox"
+                    />
+                    <span>{{ item.name }}</span>
+                    <span class="text-muted" style="margin-left:auto;">+ {{ item.price_flat|round(2) }} ₽</span>
+                </label>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted">Нет доступного инвентаря.</p>
+            {% endif %}
+        </div>
+
+        <div class="mt-6">
+            <h2 class="card-title">Музыкальный продюсер (опционально)</h2>
+            <div class="form-field mt-2">
+                <label class="label" for="producer_id">Продюсер</label>
+                <select id="producer_id" name="producer_id" class="input" style="background-color: #020617;">
+                    <option value="" data-fee="0">Без продюсера</option>
+                    {% for p in producers %}
+                    <option value="{{ p.staff_id }}" data-fee="{{ p.fee_flat }}">
+                        ID {{ p.staff_id }} — {{ p.last_name or 'Без фамилии' }} (+{{ p.fee_flat|round(2) }} ₽)
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="card mt-6 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Итого</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">Комната (фикс.)</div>
+                    <div class="col-6 text-end"><span id="roomFee">{{ room_fee_flat|round(2) }}</span> ₽</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">Инвентарь</div>
+                    <div class="col-6 text-end"><span id="invTotal">0.00</span> ₽</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">Продюсер</div>
+                    <div class="col-6 text-end"><span id="producerFee">0.00</span> ₽</div>
+                </div>
+                <hr />
+                <div class="row mt-3 fw-bold fs-5">
+                    <div class="col-6">Предварительная стоимость</div>
+                    <div class="col-6 text-end text-success"><span id="grandTotal">0.00</span> ₽</div>
+                </div>
+                <small class="text-muted d-block mt-2">
+                    * Итог рассчитывается по фиксированным доплатам.
+                </small>
+            </div>
+        </div>
+
+        <button class="btn mt-6" type="submit" style="max-width: 260px;">
+            Подтвердить бронирование
+        </button>
+    </form>
+</div>
+
+<script>
+  (function () {
+    const roomFee = Number(document.getElementById('roomFee')?.textContent || 0);
+    const invTotalEl = document.getElementById('invTotal');
+    const producerFeeEl = document.getElementById('producerFee');
+    const grandTotalEl = document.getElementById('grandTotal');
+    const producerSelect = document.getElementById('producer_id');
+    const inventoryChecks = Array.from(document.querySelectorAll('input[name="inventory_item"]'));
+
+    function round2(n) {
+      return (Math.round((n + Number.EPSILON) * 100) / 100).toFixed(2);
+    }
+
+    function recalc() {
+      const invSum = inventoryChecks
+        .filter((c) => c.checked)
+        .reduce((acc, c) => acc + Number(c.dataset.price || 0), 0);
+
+      const selectedOpt = producerSelect?.options?.[producerSelect.selectedIndex];
+      const producerFee = Number(selectedOpt?.dataset?.fee || 0);
+
+      const total = roomFee + invSum + producerFee;
+
+      if (invTotalEl) invTotalEl.textContent = round2(invSum);
+      if (producerFeeEl) producerFeeEl.textContent = round2(producerFee);
+      if (grandTotalEl) grandTotalEl.textContent = round2(total);
+    }
+
+    inventoryChecks.forEach((c) => c.addEventListener('change', recalc));
+    if (producerSelect) producerSelect.addEventListener('change', recalc);
+    recalc();
+  })();
+</script>
+{% endblock %}

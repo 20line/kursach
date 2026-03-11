@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Клиент с наибольшим количеством бронирований{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Клиент с наибольшим количеством бронирований</h1>
+        <p class="card-description">
+            Сводка по лидеру и список его заказов.
+        </p>
+    </div>
+
+    {% if error == "" %}
+        {% if user %}
+        <div class="mt-4">
+            <p><strong>Клиент:</strong> {{ user.username }}</p>
+            <p><strong>ID клиента:</strong> {{ user.user_id }}</p>
+            <p><strong>Кол-во бронирований:</strong> {{ user.booking_count }}</p>
+            <p><strong>Общая выручка:</strong> {{ user.total_revenue }}</p>
+        </div>
+        {% else %}
+        <p class="alert alert-error mt-4">Не найдено клиента</p>
+        {% endif %}
+
+        {% if data %}
+        <table class="mt-4">
+            <thead>
+                <tr>
+                    {% for col in data[0].keys() %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    {% for value in row.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="mt-4 text-muted">Нет данных по заказам для отображения.</p>
+        {% endif %}
+    {% else %}
+    <p class="alert alert-error mt-4"><strong>Ошибка:</strong> {{ error }}</p>
+    {% endif %}
+
+    <button
+        class="btn btn-outline mt-6"
+        onclick="window.location.href = '/report/menu'"
+    >
+        Назад в меню
+    </button>
+</div>
+{% endblock %}

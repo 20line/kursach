@@ -1,9 +1,9 @@
 import os
 
-
 class SQLProvider:
     def __init__(self, file_path):
         """
+
         :param file_path: директория, в которой лежат все файлы
         """
         self.scripts = {} # инициализируем словарь

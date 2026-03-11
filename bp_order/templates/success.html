@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Бронирование создано{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Бронирование успешно создано</h1>
+        {% if booking_id %}
+        <p class="card-description">Номер бронирования: {{ booking_id }}</p>
+        {% endif %}
+    </div>
+
+    <div class="mt-4">
+        <a
+            href="/"
+            class="text-muted"
+            style="text-decoration: underline; font-size: 13px;"
+            >Вернуться в меню пользователя</a
+        >
+    </div>
+</div>
+{% endblock %}

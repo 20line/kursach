@@ -1,1 +1,0 @@
-CALL get_top_service(%s, %s);

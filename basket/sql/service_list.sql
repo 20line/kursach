@@ -1,1 +1,0 @@
-SELECT service_id AS prod_id, service_name AS prod_name, price AS prod_price FROM service;

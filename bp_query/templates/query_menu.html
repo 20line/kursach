@@ -1,22 +1,48 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Запрос</title>
-</head>
-<body>
-<center>
-    <h2>Ввод параметров поиска</h2>
-    <p>
-        <form action="" method="POST">
-            <label for="prod_category">Категория продуктов</label>
-            <input type="text" name="prod_category" id="prod_category">
-            <br><br>
+{% extends "base.html" %}
 
-            <input type="submit" value="Отправить">
-        </form>
-    </p>
-    <a href="/">Вернуться на главную страницу</a>
-</center>
-</body>
-</html>
+{% block title %}Меню SQL-запросов{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">SQL-запросы</h1>
+        <p class="card-description">
+            Просмотр истории бронирований и деталей отдельных бронирований.
+        </p>
+    </div>
+
+    <div class="menu-vertical mt-4">
+        {% if role == "admin" %}
+        <button
+            class="btn btn-block"
+            onclick="window.location.href = '/query/menu/history_client'"
+        >
+            История бронирований клиента
+        </button>
+        {% endif %}
+
+        {% if role == "client" %}
+        <button
+            class="btn btn-block"
+            onclick="window.location.href = '/query/menu/orders_list'"
+        >
+            Список бронирований
+        </button>
+        {% endif %}
+
+        <button
+            class="btn btn-block"
+            onclick="window.location.href = '/query/menu/single_order'"
+        >
+            Просмотр одного бронирования
+        </button>
+
+        <button
+            class="btn btn-outline btn-block"
+            onclick="window.location.href = '/'"
+        >
+            Вернуться в главное меню
+        </button>
+    </div>
+</div>
+{% endblock %}

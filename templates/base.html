@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}Логистика{% endblock %}</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='main.css') }}"
+        />
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="page">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

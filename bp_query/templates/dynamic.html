@@ -1,31 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dynamic</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css"> <!-- Jinja подставляет адрес css файла -->
-</head>
-<body>
-    <center>
-        <h2>{{prod_title}}</h2>
-        <p>
-            <table border="1">
-                <tr class="tab_title">
-                    {% for column in columns %}
-                        <td>{{ column }}</td>
-                    {% endfor %}
-                </tr>
-        {% for product in products %}
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">{{ title }}</h1>
+    </div>
+
+    {% if data %}
+    <table class="mt-4">
+        <thead>
             <tr>
-                <td>{{product[0]}}</td>
-                <td>{{product[1]}}</td>
-                <td>{{product[2]}}</td>
+                {% for col in data[0].keys() %}
+                <th>{{ col }}</th>
+                {% endfor %}
             </tr>
-        {% endfor %}
-            </table>
-        </p>
-        <a href="/">Вернуться в главное меню</a>
-    </center>
-</body>
-</html>
-<!-- Добавить возвращение в меню -->
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr
+                class="order-row"
+                onclick="window.location = '{{ url_for('blueprint_query.order_detail', order_id=row['booking_id']) }}'"
+            >
+                {% for value in row.values() %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="mt-4 text-muted">Нет данных для отображения.</p>
+    {% endif %}
+
+    <button class="btn btn-outline mt-6" onclick="window.history.back()">
+        Назад
+    </button>
+</div>
+
+<script>
+    document.querySelectorAll(".order-row").forEach((row) => {
+        row.style.cursor = "pointer";
+    });
+</script>
+{% endblock %}

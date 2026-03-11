@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}История заказов клиента{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 480px; margin: 0 auto;">
+    <div class="card-header">
+        <h1 class="card-title">История заказов клиента</h1>
+        <p class="card-description">
+            Укажите username клиента, чтобы посмотреть его заказы.
+        </p>
+    </div>
+
+    <form
+        class="form mt-4"
+        method="POST"
+        action="{{ url_for('blueprint_query.client_history_handler_post') }}"
+    >
+        <div class="form-field">
+            <label class="label" for="username">Username клиента</label>
+            <input
+                id="username"
+                type="text"
+                name="username"
+                class="input"
+                required
+            />
+        </div>
+        <button class="btn btn-block" type="submit">
+            Показать историю
+        </button>
+    </form>
+
+    <button class="btn btn-outline mt-6" onclick="window.history.back()">
+        Назад
+    </button>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Бронирование{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Бронирование: {{ order.booking_id }}</h1>
+        <p class="card-description">
+            Клиент ID: {{ order.client_id }},
+            статус: {{ order.booking_state }}
+        </p>
+    </div>
+
+    <div class="mt-4">
+        <p>Начало: {{ order.start_at }}</p>
+        <p>Окончание: {{ order.end_at }}</p>
+        <p>Комната ID: {{ order.room_id }}</p>
+        <p>Продюсер ID: {{ order.producer_id or '—' }}</p>
+        <p>Стоимость: {{ order.total_price|round(2) }} ₽</p>
+    </div>
+
+    <div class="mt-4">
+        {% if items %} {% for item in items %}
+        <div class="card mt-2">
+            <div class="card-header">
+                <p class="card-title" style="font-size: 14px;">
+                    {{ item.name }}
+                </p>
+                <p class="card-description">
+                    Стоимость доплаты: {{ item.price_flat|round(2) }} ₽
+                </p>
+            </div>
+        </div>
+        {% endfor %} {% else %}
+        <p class="text-muted">Для этого бронирования нет выбранного инвентаря.</p>
+        {% endif %}
+    </div>
+
+    <button class="btn btn-outline mt-6" onclick="window.history.back()">
+        Назад
+    </button>
+</div>
+{% endblock %}

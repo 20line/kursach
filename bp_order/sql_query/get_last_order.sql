@@ -1,0 +1,1 @@
+SELECT LAST_INSERT_ID() AS order_id;

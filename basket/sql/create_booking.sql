@@ -1,1 +1,0 @@
-INSERT INTO booking (client_id, booking_date) VALUES (%s, CURDATE());
